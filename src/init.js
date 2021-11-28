@@ -17,25 +17,6 @@ const name = {
   required: true,
 };
 
-const s3bucket = {
-  description: 'Amazon S3 Bucket name (required for cordova-hcp deploy)',
-  pattern: /^[a-zA-Z\-0-9\.]+$/,
-  message: 'Name must be only letters, numbers, or dashes',
-};
-
-const s3prefix = {
-  description: 'Path in S3 bucket (optional for cordova-hcp deploy)',
-  pattern: /^[a-zA-Z\-\s0-9\.\/]+\/$/,
-  message: 'Path must be only letters, numbers, spaces, forward slashes or dashes and must end with a forward slash',
-};
-
-const s3region = {
-  description: 'Amazon S3 region (required for cordova-hcp deploy)',
-  pattern: /^(us-east-1|us-west-2|us-west-1|eu-west-1|eu-central-1|ap-southeast-1|ap-southeast-2|ap-northeast-1|sa-east-1)$/,
-  default: 'us-east-1',
-  message: 'Must be one of: us-east-1, us-west-2, us-west-1, eu-west-1, eu-central-1, ap-southeast-1, ap-southeast-2, ap-northeast-1, sa-east-1',
-};
-
 const iosIdentifier = {
   description: 'IOS app identifier',
   pattern: /^[a-zA-Z\-0-9\.]+$/,
@@ -57,9 +38,6 @@ const update = {
 const schema = {
   properties: {
     name,
-    s3bucket,
-    s3prefix,
-    s3region,
     ios_identifier: iosIdentifier,
     android_identifier: androidIdentifier,
     update,
@@ -85,7 +63,6 @@ export function execute(context) {
   let result;
 
   getInput(prompt, schema)
-    .then(validateBucket)
     .then(res => result = res)
     .then(getUrl)
     .then(url => _.assign(result, url))
@@ -93,32 +70,10 @@ export function execute(context) {
     .then(done);
 }
 
-function validateBucket(result) {
-  if (!result.s3bucket) {
-    return _.omit(result, ['s3region', 's3bucket', 's3prefix']);
-  }
-
-  return result;
-}
-
-function getUrl({ s3region: region, s3bucket: bucket, s3prefix: path }) {
-  if (!bucket) {
+function getUrl() {
     return getInput(prompt, urlSchema);
-  }
-
-  return { content_url: getContentUrl(region, bucket, path) };
 }
 
-function getContentUrl(region, bucket, path) {
-  let url = region === 'us-east-1' ? 's3.amazonaws.com' : `s3-${region}.amazonaws.com`;
-  url = `https://${url}/${bucket}`
-
-  if (path) {
-    url += `/${path}`;
-  }
-
-  return url;
-}
 
 function done(err) {
   if (err) {

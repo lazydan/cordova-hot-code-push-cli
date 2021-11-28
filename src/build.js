@@ -1,6 +1,5 @@
 (function() {
   var path = require('path'),
-    prompt = require('prompt'),
     fs = require('fs-extra'),
     async = require('async'),
     crypto = require('crypto'),

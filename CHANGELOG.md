@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.0.2 (2021-11-28)
+
+- Left `init` and `build` function only.
+
 ## 1.1.1 (2016-05-05)
 
 - Removed unused dependency from the `package.json`.

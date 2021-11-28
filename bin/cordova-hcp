@@ -6,10 +6,7 @@ var path = require('path'),
 var cmd = argv._[0];
 switch(cmd) {
   case 'build':
-  case 'login':
   case 'init':
-  case 'server':
-  case 'deploy':
     console.log('Running ' + cmd);
     var command = require(path.resolve(__dirname, '..', 'dist', cmd + '.js')),
       context = chcpContext.context(argv);
