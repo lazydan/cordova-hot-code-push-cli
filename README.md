@@ -64,8 +64,6 @@ Initialization command for CLI client. Generates default application configurati
 
 When executed - you will be asked to fill in some project preferences from the command line:
 - `Project name` - your current project name. **Required**.
-- `Amazon S3 Bucket name` - name of the S3 Bucket on the Amazon. **Required for deployment**, can be skipped in other cases.
-- `Amazon S3 region` - Amazon S3 region. **Required for deployment**, can be skipped in other cases.
 - `iOS app identifier` - applications id on the App Store. Used to redirect user to the applications page on the store.
 - `Android app identifier` - applications package name by which we reference app on the Google Play.
 - `Update method` - when to perform the update. Supports three keys:
@@ -77,8 +75,6 @@ For example, execute `init` in your project root folder and fill preferences as 
 ```
 Running init
 Please provide: Enter project name (required):  TestProject
-Please provide: Amazon S3 Bucket name (required for cordova-hcp deploy):  chcp-test
-Please provide: Amazon S3 region (required for cordova-hcp deploy):  (us-east-1) eu-west-1
 Please provide: IOS app identifier:  id123456789
 Please provide: Android app identifier:  com.example.chcp.testproject
 Please provide: Update method (required):  (resume) start
@@ -91,8 +87,6 @@ As a result, content of the `cordova-hcp.json` file will be:
 ```json
 {
   "name": "TestProject",
-  "s3bucket": "chcp-test",
-  "s3region": "eu-west-1",
   "ios_identifier": "id123456789",
   "android_identifier": "com.example.chcp.testproject",
   "update": "start",
